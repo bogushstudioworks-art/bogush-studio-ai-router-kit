@@ -1,0 +1,30 @@
+{
+  "name": "bogush-studio-ai-router-kit",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A safe-by-default Telegram to Vertex AI router template for Cloud Run.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "npm run check && npm run smoke && npm run test:webhook && npm run test:send-failure && npm run test:logs && npm run test:prompt && npm run test:product && npm run test:commands && npm run test:config",
+    "check": "node --check src/server.js",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test:webhook": "node scripts/webhook-edge-test.mjs",
+    "test:send-failure": "node scripts/telegram-send-failure-test.mjs",
+    "test:logs": "node scripts/log-privacy-test.mjs",
+    "test:prompt": "node scripts/prompt-policy-test.mjs",
+    "test:product": "node scripts/prompt-product-test.mjs",
+    "test:commands": "node scripts/command-reply-test.mjs",
+    "test:config": "node scripts/config-audit-test.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^1.52.0",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {}
+}

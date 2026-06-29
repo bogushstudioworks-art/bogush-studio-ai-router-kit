@@ -1,0 +1,12 @@
+{
+  "update_id": 100000002,
+  "message": {
+    "message_id": 2,
+    "chat": {
+      "id": 123456789,
+      "type": "private"
+    },
+    "date": 1782010001,
+    "photo": []
+  }
+}
