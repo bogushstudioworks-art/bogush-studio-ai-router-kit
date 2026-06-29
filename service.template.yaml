@@ -1,0 +1,35 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: telegram-ai-router
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    spec:
+      serviceAccountName: telegram-ai-router-sa@PROJECT_ID.iam.gserviceaccount.com
+      containers:
+        - image: IMAGE_URL
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: DRY_RUN
+              value: "true"
+            - name: GOOGLE_CLOUD_PROJECT
+              value: PROJECT_ID
+            - name: GOOGLE_CLOUD_LOCATION
+              value: us-central1
+            - name: VERTEX_MODEL
+              value: gemini-2.5-flash
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-bot-token
+                  key: latest
+            - name: TELEGRAM_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-webhook-secret
+                  key: latest

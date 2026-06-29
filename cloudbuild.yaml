@@ -1,0 +1,31 @@
+substitutions:
+  _REGION: us-central1
+  _SERVICE_NAME: telegram-ai-router
+  _SERVICE_ACCOUNT: telegram-ai-router-sa@PROJECT_ID.iam.gserviceaccount.com
+  _VERTEX_MODEL: gemini-2.5-flash
+  _DRY_RUN: "true"
+
+steps:
+  - name: node:22
+    entrypoint: npm
+    args: ["ci"]
+
+  - name: node:22
+    entrypoint: npm
+    args: ["test"]
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE_NAME}
+      - --source=.
+      - --region=${_REGION}
+      - --allow-unauthenticated
+      - --service-account=${_SERVICE_ACCOUNT}
+      - --set-env-vars=NODE_ENV=production,DRY_RUN=${_DRY_RUN},GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=${_REGION},VERTEX_MODEL=${_VERTEX_MODEL}
+      - --set-secrets=TELEGRAM_BOT_TOKEN=telegram-bot-token:latest,TELEGRAM_WEBHOOK_SECRET=telegram-webhook-secret:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY

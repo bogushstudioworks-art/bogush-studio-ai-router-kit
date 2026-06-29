@@ -1,5 +1,7 @@
 # Bogush Studio AI Router Kit
 
+[![CI](https://github.com/bogushstudioworks-art/bogush-studio-ai-router-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/bogushstudioworks-art/bogush-studio-ai-router-kit/actions/workflows/ci.yml)
+
 Safe-by-default Node.js template for routing Telegram webhook messages to Vertex AI
 Gemini on Google Cloud Run.
 
@@ -14,11 +16,22 @@ private client data, billing configuration, and deployment defaults.
 - Sends a Telegram reply only when `DRY_RUN=false`.
 - Exposes `GET /healthz` for Cloud Run health checks.
 
+## Why This Exists
+
+Many studios and solo builders want a practical AI intake bot without starting
+from a workflow automation platform. This kit keeps the first version small:
+one Cloud Run service, explicit environment variables, dry-run defaults, local
+tests, and a clear path to production hardening.
+
 ## Files
 - `src/server.js` - Express service.
 - `Dockerfile` - Cloud Run container image.
 - `package.json` - Node dependencies and scripts.
 - `.env.example` - environment variable template.
+- `cloudbuild.yaml` - Cloud Build template with tests before deploy.
+- `service.template.yaml` - Cloud Run service template for manual review.
+- `docs/architecture.md` - system design and request flow.
+- `docs/deployment.md` - deployment checklist and safety notes.
 - `SETUP_CHECKLIST.md` - pre-deploy checklist.
 - `SECRETS_AND_IAM.md` - Secret Manager and IAM plan.
 - `LOCAL_TESTS.md` - local smoke test commands.
@@ -81,3 +94,14 @@ The webhook script does not call Telegram by default.
 ```
 
 Re-run with `-ConfirmSetWebhook` only when you want it to print the exact Telegram command for manual execution.
+
+## Project Status
+
+Early public template. The current focus is:
+
+- keep the deployment path safe by default
+- improve tests and CI coverage
+- document practical Cloud Run and Telegram setup
+- avoid shipping any production-specific data
+
+See [ROADMAP.md](ROADMAP.md).

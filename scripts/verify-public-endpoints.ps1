@@ -1,21 +1,25 @@
 param(
   [Parameter(Mandatory = $false)]
-  [string]$ProjectId = "project-a4cef2bd-9f4d-4539-b02",
+  [string]$ProjectId = "",
 
   [Parameter(Mandatory = $false)]
   [string]$Region = "us-central1",
 
   [Parameter(Mandatory = $false)]
-  [string]$ServiceName = "telegram-ai-router",
+  [string]$ServiceName = "",
 
   [Parameter(Mandatory = $false)]
-  [string]$ExpectedRevision = "telegram-ai-router-00016-tzj",
+  [string]$ExpectedRevision = "",
 
   [Parameter(Mandatory = $false)]
   [string]$GcloudPath = ""
 )
 
 $ErrorActionPreference = "Stop"
+
+if (-not $ProjectId -or -not $ServiceName -or -not $ExpectedRevision) {
+  throw "ProjectId, ServiceName, and ExpectedRevision are required. This public template has no production defaults."
+}
 
 $workspaceRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..")
 $bundledGcloud = Join-Path $workspaceRoot "tools\google-cloud-cli-bundled-tar\google-cloud-sdk\bin\gcloud.cmd"
