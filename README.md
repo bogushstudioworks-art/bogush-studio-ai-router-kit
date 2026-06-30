@@ -32,6 +32,8 @@ tests, and a clear path to production hardening.
 - `service.template.yaml` - Cloud Run service template for manual review.
 - `docs/architecture.md` - system design and request flow.
 - `docs/deployment.md` - deployment checklist and safety notes.
+- `docs/operations.md` - release, runtime, logging, and rollback runbook.
+- `CHANGELOG.md` - release history.
 - `SETUP_CHECKLIST.md` - pre-deploy checklist.
 - `SECRETS_AND_IAM.md` - Secret Manager and IAM plan.
 - `LOCAL_TESTS.md` - local smoke test commands.
